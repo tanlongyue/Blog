@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/personblog?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  main:
+    allow-bean-definition-overriding: true
+  redis:
+    host: 192.168.0.102
+    port: 6379
+    password: 123
+    database: 1
+#  servlet:
+#    multipart:
+#      enabled: true
+#      max-file-size: 50MB
+#      max-request-size: 50MB
+#file:
+#  filepath: D:/home/Xchain/Tomcat/apache-tomcat-8.0.43/webapp_html/buildTalent/html/data
+#server.tomcat.basedir: D:/home/Xchain/Tomcat/apache-tomcat-8.0.43/webapp_html/buildTalent/html/data
+logging:
+  config: classpath:log4j2-spring.xml
+mybatis:
+  config-location: classpath:mybatis-config.xml

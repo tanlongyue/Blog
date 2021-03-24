@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiyue.personalblog.mapper.message.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.yiyue.personalblog.entity.message.domain.Message">
+    <id column="messageId" jdbcType="INTEGER" property="messageid" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="parentMessageId" jdbcType="INTEGER" property="parentmessageid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="MessageTop" jdbcType="CHAR" property="messagetop" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <association property="userInfo" javaType="com.yiyue.personalblog.entity.user.domain.UserInfo">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="user_Nick_name" jdbcType="VARCHAR" property="userNickName" />
+      <result column="user_login_Name" jdbcType="VARCHAR" property="userLoginName" />
+      <result column="user_Password" jdbcType="VARCHAR" property="userPassword" />
+      <result column="salt" jdbcType="VARCHAR" property="salt" />
+      <result column="user_Phone" jdbcType="CHAR" property="userPhone" />
+      <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+      <result column="user_sex" jdbcType="CHAR" property="userSex" />
+      <result column="user_Head_Portrait" jdbcType="VARCHAR" property="userHeadPortrait" />
+      <result column="user_role_id" jdbcType="VARCHAR" property="userRoleId" />
+      <result column="createBy" jdbcType="BIGINT" property="createby" />
+      <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+      <result column="modifyBy" jdbcType="BIGINT" property="modifyby" />
+      <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
+      <result column="spareOne" jdbcType="VARCHAR" property="spareone" />
+      <result column="spareTwo" jdbcType="VARCHAR" property="sparetwo" />
+      <result column="spareThree" jdbcType="VARCHAR" property="sparethree" />
+      <result column="spareFour" jdbcType="VARCHAR" property="sparefour" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    messageId, userId, parentMessageId, content, MessageTop, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.yiyue.personalblog.entity.message.example.MessageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where messageId = #{messageid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from message
+    where messageId = #{messageid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yiyue.personalblog.entity.message.example.MessageExample">
+    delete from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="messageId" keyProperty="messageid" parameterType="com.yiyue.personalblog.entity.message.domain.Message" useGeneratedKeys="true">
+    insert into message (userId, parentMessageId, content, 
+      MessageTop, createTime)
+    values (#{userid,jdbcType=INTEGER}, #{parentmessageid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{messagetop,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="messageId" keyProperty="messageid" parameterType="com.yiyue.personalblog.entity.message.domain.Message" useGeneratedKeys="true">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="parentmessageid != null">
+        parentMessageId,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="messagetop != null">
+        MessageTop,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="parentmessageid != null">
+        #{parentmessageid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="messagetop != null">
+        #{messagetop,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yiyue.personalblog.entity.message.example.MessageExample" resultType="java.lang.Long">
+    select count(*) from message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update message
+    <set>
+      <if test="record.messageid != null">
+        messageId = #{record.messageid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentmessageid != null">
+        parentMessageId = #{record.parentmessageid,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messagetop != null">
+        MessageTop = #{record.messagetop,jdbcType=CHAR},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update message
+    set messageId = #{record.messageid,jdbcType=INTEGER},
+      userId = #{record.userid,jdbcType=INTEGER},
+      parentMessageId = #{record.parentmessageid,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      MessageTop = #{record.messagetop,jdbcType=CHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yiyue.personalblog.entity.message.domain.Message">
+    update message
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="parentmessageid != null">
+        parentMessageId = #{parentmessageid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="messagetop != null">
+        MessageTop = #{messagetop,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where messageId = #{messageid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yiyue.personalblog.entity.message.domain.Message">
+    update message
+    set userId = #{userid,jdbcType=INTEGER},
+      parentMessageId = #{parentmessageid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      MessageTop = #{messagetop,jdbcType=CHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where messageId = #{messageid,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryMessage" resultMap="BaseResultMap">
+    SELECT a.*,userInfo.* FROM message a
+    LEFT JOIN user_info userInfo ON a.userId = userInfo.id
+  </select>
+
+
+</mapper>
