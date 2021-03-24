@@ -39,6 +39,7 @@ public class ShiroConfig {
         //必须设置securityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
+
         //设置用户登录的页面  如果需要登录没有登录的话 则调用这个接口
         shiroFilterFactoryBean.setLoginUrl("/pub/need_login");
 
