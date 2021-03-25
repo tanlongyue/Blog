@@ -34,4 +34,6 @@ public interface MessageService {
      * 查询全部留言和对应的用户信息
      * */
     List<Message> queryMessage();
+
+    Integer selectCount();
 }

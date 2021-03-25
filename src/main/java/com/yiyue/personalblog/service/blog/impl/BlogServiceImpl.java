@@ -83,7 +83,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> selectPublished(Blog blogExample) {
-        return blogMapper.selectPublished(blogExample);
+    public List<Blog> selectPublished(Blog blogExample,String typeId) {
+        return blogMapper.selectPublished(blogExample,typeId);
+    }
+
+    @Override
+    public Integer findBlogCount(String typeId) {
+        return blogMapper.findBlogCount(typeId);
     }
 }

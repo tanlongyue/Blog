@@ -49,7 +49,7 @@ public class BlogTypeServiceImpl implements BlogTypeService {
 
     @Override
     public List<BlogType> selectByExample(BlogTypeExample example) {
-        return null;
+        return blogTypeMapper.selectByExample(example);
     }
 
     @Override

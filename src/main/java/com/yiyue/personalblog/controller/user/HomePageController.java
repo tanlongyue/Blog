@@ -64,7 +64,7 @@ public class HomePageController {
     @RequestMapping("selectPublished")
     public JsonData selectPublished(Blog blog){
         PageHelper.startPage(blog.getPageNum(),blog.getPageSize());
-        List<Blog> lists  = blogService.selectPublished(blog);
+        List<Blog> lists  = blogService.selectPublished(blog,"");
         PageInfo<Blog> pageInfo = new PageInfo<>(lists);
         return JsonData.buildSuccess(pageInfo,200);
     }

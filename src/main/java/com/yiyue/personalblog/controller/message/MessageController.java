@@ -7,6 +7,7 @@ import com.yiyue.personalblog.entity.message.example.MessageExample;
 import com.yiyue.personalblog.service.message.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,14 +29,14 @@ public class MessageController {
     /**
      * 查询所有留言
      * */
-    @RequestMapping("queryMessageAll")
+    @RequestMapping(value = "queryMessageAll",method = RequestMethod.GET)
     public JsonData queryMessageAll(){
-        MessageExample messageExample =  new MessageExample();
         /**
          * 查询出所有的留言
          * */
-
         List<Message> messages = messageService.queryMessage();
         return JsonData.buildSuccess(messages,Constants.NUM_SCUESS);
     }
+
+
 }

@@ -242,6 +242,9 @@
     SELECT a.*,userInfo.* FROM message a
     LEFT JOIN user_info userInfo ON a.userId = userInfo.id
   </select>
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(1) from message
+    </select>
 
 
 </mapper>

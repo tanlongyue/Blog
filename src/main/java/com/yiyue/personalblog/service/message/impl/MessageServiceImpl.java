@@ -75,4 +75,9 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> queryMessage() {
         return messageMapper.queryMessage();
     }
+
+    @Override
+    public Integer selectCount() {
+        return messageMapper.selectCount();
+    }
 }

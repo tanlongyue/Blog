@@ -64,12 +64,19 @@ public class  Constants {
     /*
         最新推荐
     /*/
-    public static final String LATEST_RECOMMENDATION = "latest_Recommendation";
+    public static final String LATEST_RECOMMENDATION = "LATEST_RECOMMENDATION";
 
     /*
         最新文章
     /*/
-    public static final String LATEST_ARTICLES = "latestArticles";
+    public static final String LATEST_ARTICLES = "LATEST_ARTICLES";
+
+
+    /*
+        文章分类
+     /*/
+    public static final String LATEST_ARTICLE_CLASSIFICATION = "LATEST_ARTICLE_CLASSIFICATION";
+
 
 
 

@@ -32,5 +32,7 @@ public interface BlogMapper {
 
     List<Blog> selectRecommend();
 
-    List<Blog> selectPublished(Blog blog);
+    List<Blog> selectPublished(Blog blog,@Param("typeId")String typeId);
+
+    Integer findBlogCount(@Param("typeId")String typeId);
 }

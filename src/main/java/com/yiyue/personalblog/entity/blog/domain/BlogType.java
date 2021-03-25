@@ -22,6 +22,16 @@ public class BlogType implements Serializable {
      */
     private String remark;
 
+    private String blogCount;
+
+    public String getBlogCount() {
+        return blogCount;
+    }
+
+    public void setBlogCount(String blogCount) {
+        this.blogCount = blogCount;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getTypeid() {

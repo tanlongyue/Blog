@@ -133,7 +133,12 @@
     SELECT * FROM blog
     LEFT JOIN blog_type AS blogType ON blog.typeId = blogType.typeId
     INNER JOIN user_info AS userInfo ON blog.userId = userInfo.id
-    WHERE recommend = 1
+    <where>
+      recommend = 1
+      <if test="typeId != null and typeId != ''">
+        and blogType.typeId = #{typeId}
+      </if>
+    </where>
     ORDER BY `blog`.createTime DESC
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -274,6 +279,14 @@
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  <select id="findBlogCount" resultType="java.lang.Integer">
+      SELECT COUNT(1) FROM `blog`
+      <where>
+        <if test="typeId != null and typeId != ''">
+           typeid = #{typeId}
+        </if>
+      </where>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
     update blog

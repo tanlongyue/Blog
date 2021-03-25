@@ -33,4 +33,8 @@ public interface MessageMapper {
      * */
     List<Message> queryMessage();
 
+    /**
+     * 查询总计数留言
+     * */
+    Integer selectCount();
 }
