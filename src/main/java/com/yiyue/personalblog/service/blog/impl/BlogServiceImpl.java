@@ -22,6 +22,8 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private BlogMapper blogMapper;
 
+
+
     @Override
     public long countByExample(BlogExample example) {
         return 0;
@@ -90,5 +92,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Integer findBlogCount(String typeId) {
         return blogMapper.findBlogCount(typeId);
+    }
+
+    @Override
+    public Blog findArDetailInfo(BlogExample example) {
+        return blogMapper.findArDetailInfo(example);
     }
 }

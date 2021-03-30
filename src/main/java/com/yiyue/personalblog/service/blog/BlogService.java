@@ -42,4 +42,9 @@ public interface BlogService {
     List<Blog> selectPublished(Blog blog,@Param("typeId")String typeId);
 
     Integer findBlogCount(String typeId);
+
+    /**
+     * 文章信息
+     * */
+    Blog findArDetailInfo(BlogExample example);
 }

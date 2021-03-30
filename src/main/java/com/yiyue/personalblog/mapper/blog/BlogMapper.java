@@ -35,4 +35,9 @@ public interface BlogMapper {
     List<Blog> selectPublished(Blog blog,@Param("typeId")String typeId);
 
     Integer findBlogCount(@Param("typeId")String typeId);
+
+    /**
+     * 文章信息
+     * */
+    Blog findArDetailInfo(BlogExample example);
 }
