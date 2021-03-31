@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.yiyue.personalblog.constants.Constants;
 import com.yiyue.personalblog.entity.blog.domain.Blog;
 import com.yiyue.personalblog.entity.blog.domain.BlogType;
+import com.yiyue.personalblog.entity.blog.example.BlogExample;
 import com.yiyue.personalblog.entity.blog.example.BlogTypeExample;
 import com.yiyue.personalblog.entity.common.JsonData;
 import com.yiyue.personalblog.service.blog.BlogService;
@@ -45,7 +46,6 @@ public class BlogToBlogTypeController {
      * */
     @RequestMapping(value = "selectBlogTypeToCount",method = RequestMethod.GET)
     public JsonData selectBlogTypeToCount(){
-
         String articleClass = stringRedisTemplate.opsForValue().get(Constants.LATEST_ARTICLE_CLASSIFICATION);
         List<BlogType> blogTypesList;
         if(articleClass != null){
@@ -58,7 +58,7 @@ public class BlogToBlogTypeController {
             //存入Redis 并设置失效时间2400秒
             stringRedisTemplate.opsForValue().set(Constants.LATEST_ARTICLE_CLASSIFICATION,JSONObject.toJSONString(blogTypesList),2400, TimeUnit.SECONDS);
         }
-        return JsonData.buildSuccess(blogTypesList,200);
+        return JsonData.buildSuccess(blogTypesList,Constants.NUM_SCUESS);
     }
 
     /**
@@ -69,8 +69,26 @@ public class BlogToBlogTypeController {
         PageHelper.startPage(blog.getPageNum(),blog.getPageSize());
         List<Blog> lists  = blogService.selectPublished(blog,typeId);
         PageInfo<Blog> pageInfo = new PageInfo<>(lists);
-        return JsonData.buildSuccess(pageInfo,200);
+        return JsonData.buildSuccess(pageInfo,Constants.NUM_SCUESS);
     }
 
-
+    /**
+     * 文章详情
+     * */
+    @RequestMapping(value = "blogDetailInfo",method = RequestMethod.POST)
+    public JsonData blogDetailInfo(Blog blog){
+        BlogExample blogExample = new BlogExample();
+        BlogExample.Criteria criteria = blogExample.createCriteria();
+        criteria.andBlogidEqualTo(blog.getBlogid());
+        String articleDetail = stringRedisTemplate.opsForValue().get(Constants.LATEST_ARTICLE_DETAIL + blog.getBlogid());
+        Blog blogs;
+        if(articleDetail != null){
+            Object parse = JSONObject.parse(articleDetail);
+            return JsonData.buildSuccess(parse,Constants.NUM_SCUESS);
+        }else{
+            blogs = blogService.findArDetailInfo(blogExample);
+            stringRedisTemplate.opsForValue().set(Constants.LATEST_ARTICLE_DETAIL+blog.getBlogid(),JSONObject.toJSONString(blogs),2400,TimeUnit.SECONDS);
+            return JsonData.buildSuccess(blogs,Constants.NUM_SCUESS);
+        }
+    }
 }

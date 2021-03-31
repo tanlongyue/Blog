@@ -288,7 +288,15 @@
         </if>
       </where>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <select id="findArDetailInfo" resultType="com.yiyue.personalblog.entity.blog.domain.Blog" resultMap="BaseResultMap">
+      SELECT * FROM blog blog
+      LEFT JOIN user_info userInfo ON userInfo.id  = blog.userId
+      LEFT JOIN blog_type blogType ON blogType.typeId = blog.typeId
+      <if test="_parameter != null">
+        <include refid="Example_Where_Clause" />
+      </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update blog
     <set>
       <if test="record.blogid != null">

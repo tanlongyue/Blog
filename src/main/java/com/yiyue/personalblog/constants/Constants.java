@@ -78,6 +78,9 @@ public class  Constants {
     public static final String LATEST_ARTICLE_CLASSIFICATION = "LATEST_ARTICLE_CLASSIFICATION";
 
 
-
+    /*
+        文章详情
+     /*/
+    public static final String LATEST_ARTICLE_DETAIL = "LATEST_ARTICLE_DETAIL";
 
 }
