@@ -56,7 +56,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog selectByPrimaryKey(Integer blogid) {
-        return null;
+        return blogMapper.selectByPrimaryKey(blogid);
     }
 
     @Override
@@ -66,12 +66,12 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public int updateByExample(Blog record, BlogExample example) {
-        return 0;
+        return blogMapper.updateByExample(record,example);
     }
 
     @Override
     public int updateByPrimaryKeySelective(Blog record) {
-        return 0;
+        return blogMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
@@ -97,5 +97,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog findArDetailInfo(BlogExample example) {
         return blogMapper.findArDetailInfo(example);
+    }
+
+    @Override
+    public Integer findViewsCount() {
+        return blogMapper.findViewsCount();
     }
 }

@@ -91,4 +91,19 @@ public class BlogToBlogTypeController {
             return JsonData.buildSuccess(blogs,Constants.NUM_SCUESS);
         }
     }
+
+    /**
+     * 文章浏览
+     * */
+    @RequestMapping(value = "addViews",method = RequestMethod.POST)
+    public JsonData addViews(Blog blog){
+        Blog blog1 = blogService.selectByPrimaryKey(blog.getBlogid());
+        blog1.setViews(blog.getViews() + 1);
+        int i = blogService.updateByPrimaryKeySelective(blog1);
+        if(i > 0){
+            return JsonData.buildSuccess(Constants.MSG_SUCCESS,Constants.NUM_SCUESS);
+        }else{
+            return JsonData.buildSuccess(Constants.MSG_ERROR,Constants.NUM_ERROR);
+        }
+    }
 }

@@ -44,8 +44,14 @@ public class CommonController {
     @RequestMapping(value = "blogCount",method = RequestMethod.GET)
     public JsonData blogCount(){
         Integer blogCount = blogService.findBlogCount("");
-        return JsonData.buildSuccess(blogCount,200);
+        return JsonData.buildSuccess(blogCount,Constants.NUM_SCUESS);
     }
 
-
+    /**
+     * 查询访问总数
+     * */
+    @RequestMapping(value = "viewsCount",method = RequestMethod.GET)
+    public JsonData viewsCount(){
+       return JsonData.buildSuccess( blogService.findViewsCount(),Constants.NUM_SCUESS);
+    }
 }

@@ -47,4 +47,9 @@ public interface BlogService {
      * 文章信息
      * */
     Blog findArDetailInfo(BlogExample example);
+
+    /***
+     * 查询文章数量
+     */
+    Integer findViewsCount();
 }

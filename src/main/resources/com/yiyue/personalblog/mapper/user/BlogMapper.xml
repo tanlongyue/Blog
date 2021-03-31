@@ -296,7 +296,10 @@
         <include refid="Example_Where_Clause" />
       </if>
     </select>
-    <update id="updateByExampleSelective" parameterType="map">
+  <select id="findViewsCount" resultType="java.lang.Integer">
+    SELECT SUM(views)  FROM blog
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
     update blog
     <set>
       <if test="record.blogid != null">
