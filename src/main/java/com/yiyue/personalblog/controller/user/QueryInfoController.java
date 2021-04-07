@@ -36,7 +36,7 @@ import java.util.Random;
 @RequestMapping("/authc")
 public class QueryInfoController {
 
-    private  Logger log = Logger.getLogger(QueryInfoController.class);
+    private Logger log = Logger.getLogger(QueryInfoController.class);
 
     @Autowired
     private UserRoleService userRoleService;
