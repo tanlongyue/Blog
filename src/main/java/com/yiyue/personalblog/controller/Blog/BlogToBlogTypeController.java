@@ -38,27 +38,13 @@ public class BlogToBlogTypeController {
     @Autowired
     private BlogService blogService;
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * 查询分类类别
      * */
     @RequestMapping(value = "selectBlogTypeToCount",method = RequestMethod.GET)
     public JsonData selectBlogTypeToCount(){
-        String articleClass = stringRedisTemplate.opsForValue().get(Constants.LATEST_ARTICLE_CLASSIFICATION);
-        List<BlogType> blogTypesList;
-        if(articleClass != null){
-            blogTypesList = (List<BlogType>) JSONObject.parse(articleClass);
-        }else{
-            blogTypesList = blogTypeService.selectByExample(new BlogTypeExample());
-            for (BlogType blogType:blogTypesList){
-                blogType.setBlogCount(String.valueOf(blogService.findBlogCount(String.valueOf(blogType.getTypeid()))));
-            }
-            //存入Redis 并设置失效时间2400秒
-            stringRedisTemplate.opsForValue().set(Constants.LATEST_ARTICLE_CLASSIFICATION,JSONObject.toJSONString(blogTypesList),2400, TimeUnit.SECONDS);
-        }
-        return JsonData.buildSuccess(blogTypesList,Constants.NUM_SCUESS);
+       return  blogService.selectBlogTypeToCount();
     }
 
     /**
@@ -66,10 +52,7 @@ public class BlogToBlogTypeController {
      * */
     @RequestMapping(value = "classifiedClickQuery",method = RequestMethod.GET)
     public JsonData classifiedClickQuery(Blog blog,String typeId){
-        PageHelper.startPage(blog.getPageNum(),blog.getPageSize());
-        List<Blog> lists  = blogService.selectPublished(blog,typeId);
-        PageInfo<Blog> pageInfo = new PageInfo<>(lists);
-        return JsonData.buildSuccess(pageInfo,Constants.NUM_SCUESS);
+        return  blogService.classifiedClickQuery(blog,typeId);
     }
 
     /**
@@ -77,19 +60,7 @@ public class BlogToBlogTypeController {
      * */
     @RequestMapping(value = "blogDetailInfo",method = RequestMethod.POST)
     public JsonData blogDetailInfo(Blog blog){
-        BlogExample blogExample = new BlogExample();
-        BlogExample.Criteria criteria = blogExample.createCriteria();
-        criteria.andBlogidEqualTo(blog.getBlogid());
-        String articleDetail = stringRedisTemplate.opsForValue().get(Constants.LATEST_ARTICLE_DETAIL + blog.getBlogid());
-        Blog blogs;
-        if(articleDetail != null){
-            Object parse = JSONObject.parse(articleDetail);
-            return JsonData.buildSuccess(parse,Constants.NUM_SCUESS);
-        }else{
-            blogs = blogService.findArDetailInfo(blogExample);
-            stringRedisTemplate.opsForValue().set(Constants.LATEST_ARTICLE_DETAIL+blog.getBlogid(),JSONObject.toJSONString(blogs),2400,TimeUnit.SECONDS);
-            return JsonData.buildSuccess(blogs,Constants.NUM_SCUESS);
-        }
+       return  blogService.blogDetailInfo(blog);
     }
 
     /**
@@ -97,13 +68,6 @@ public class BlogToBlogTypeController {
      * */
     @RequestMapping(value = "addViews",method = RequestMethod.POST)
     public JsonData addViews(Blog blog){
-        Blog blog1 = blogService.selectByPrimaryKey(blog.getBlogid());
-        blog1.setViews(blog.getViews() + 1);
-        int i = blogService.updateByPrimaryKeySelective(blog1);
-        if(i > 0){
-            return JsonData.buildSuccess(Constants.MSG_SUCCESS,Constants.NUM_SCUESS);
-        }else{
-            return JsonData.buildSuccess(Constants.MSG_ERROR,Constants.NUM_ERROR);
-        }
+        return blogService.addViews(blog);
     }
 }

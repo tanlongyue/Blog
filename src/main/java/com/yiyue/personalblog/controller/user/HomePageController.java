@@ -46,16 +46,7 @@ public class HomePageController {
      * */
     @RequestMapping("selectRecommend")
     public JsonData selectRecommend(){
-        String recommendAtion = stringRedisTemplate.opsForValue().get(Constants.LATEST_RECOMMENDATION);
-        List<Blog> blogs;
-        if(recommendAtion != null){
-            blogs = (List<Blog>) JSONObject.parse(recommendAtion);
-        }else{
-            blogs = blogService.selectRecommend();
-            //存入Redis 并设置失效时间2400秒
-            stringRedisTemplate.opsForValue().set(Constants.LATEST_RECOMMENDATION,JSONObject.toJSONString(blogs),2400, TimeUnit.SECONDS);
-        }
-        return JsonData.buildSuccess(blogs,200);
+        return JsonData.buildSuccess(blogService.selectRecommend(),Constants.NUM_SCUESS);
     }
 
     /**
@@ -63,9 +54,6 @@ public class HomePageController {
      * */
     @RequestMapping("selectPublished")
     public JsonData selectPublished(Blog blog){
-        PageHelper.startPage(blog.getPageNum(),blog.getPageSize());
-        List<Blog> lists  = blogService.selectPublished(blog,"");
-        PageInfo<Blog> pageInfo = new PageInfo<>(lists);
-        return JsonData.buildSuccess(pageInfo,200);
+       return blogService.selectPublished(blog);
     }
 }

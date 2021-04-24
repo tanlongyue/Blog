@@ -2,6 +2,7 @@ package com.yiyue.personalblog.service.blog;
 
 import com.yiyue.personalblog.entity.blog.domain.Blog;
 import com.yiyue.personalblog.entity.blog.example.BlogExample;
+import com.yiyue.personalblog.entity.common.JsonData;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,34 +16,12 @@ import java.util.List;
  */
 public interface BlogService {
 
-    long countByExample(BlogExample example);
-
-    int deleteByExample(BlogExample example);
-
-    int deleteByPrimaryKey(Integer blogid);
-
-    int insert(Blog record);
-
-    int insertSelective(Blog record);
-
-    List<Blog> selectByExample(BlogExample example);
-
-    Blog selectByPrimaryKey(Integer blogid);
-
-    int updateByExampleSelective(@Param("record") Blog record, @Param("example") BlogExample example);
-
-    int updateByExample(@Param("record") Blog record, @Param("example") BlogExample example);
-
-    int updateByPrimaryKeySelective(Blog record);
-
-    int updateByPrimaryKey(Blog record);
 
     List<Blog> selectRecommend();
 
     List<Blog> selectPublished(Blog blog,@Param("typeId")String typeId);
 
     Integer findBlogCount(String typeId);
-
     /**
      * 文章信息
      * */
@@ -52,4 +31,31 @@ public interface BlogService {
      * 查询文章数量
      */
     Integer findViewsCount();
+
+    /**
+     * 查询首页最新文章
+     * */
+    JsonData selectPublished(Blog blog);
+
+
+    /**
+     * 文章浏览
+     * */
+    JsonData addViews(Blog blog);
+
+
+    /**
+     * 文章详情
+     * */
+    JsonData blogDetailInfo(Blog blog);
+
+    /**
+     * 分类点击查询
+     * */
+    JsonData classifiedClickQuery(Blog blog,String typeId);
+
+    /**
+     * 查询分类类别
+     * */
+    JsonData selectBlogTypeToCount();
 }

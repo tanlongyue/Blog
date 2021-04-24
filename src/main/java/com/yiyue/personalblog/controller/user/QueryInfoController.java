@@ -50,16 +50,7 @@ public class QueryInfoController {
      * */
     @RequestMapping("/selectUserByUserId")
     public JsonData selectUserByUserId(@NotNull UserInfo userInfo){
-        UserInfoExample userInfoExample = new UserInfoExample();
-        UserInfoExample.Criteria criteria = userInfoExample.createCriteria();
-        criteria.andIdEqualTo(userInfo.getId());
-        List<UserInfo> userInfos = userInfoService.selectByExample(userInfoExample);
-        //查询如果为空则List为0
-        if(userInfos.size() > 0){
-            userInfos.get(0).setUserPassword("");
-            return JsonData.buildSuccess(userInfos.get(0),Constants.NUM_SCUESS);
-        }
-        return JsonData.buildError(Constants.MSG_ERROR,Constants.NUM_ERROR);
+        return userInfoService.selectUserByUserId(userInfo);
     }
 
     /**
@@ -81,49 +72,7 @@ public class QueryInfoController {
      * */
     @RequestMapping("updateUserSelect")
     public JsonData updateUserSelect(MultipartFile file,UserInfo userInfo){
-        Map<String,String> map = new HashMap<>();
-        String path = "";
-        try {
-            if (null == file || file.isEmpty()) {
-                if(userInfo != null){
-                    if(userInfoService.updateByPrimaryKeySelective(userInfo) > 0 ){
-                        return JsonData.buildSuccess(Constants.MSG_SUCCESS,Constants.NUM_SCUESS);
-                    }else{
-                        return JsonData.buildError(Constants.MSG_ERROR,Constants.NUM_ERROR);
-                    }
-                }else{
-                    return JsonData.buildError(Constants.MSG_ERROR,Constants.NUM_ERROR);
-                }
-            }else{
-                String contentType = file.getContentType();
-                if(!contentType.contains("image")){
-                    return JsonData.buildError(Constants.MSG_IMAGE_FALSE,Constants.NUM_COMMON_ERROR);
-                }
-                String fileName = file.getOriginalFilename();
-                System.out.println("这是文件名:"+fileName);
-                String filepath = "D:/root/blog/userImage/"+userInfo.getUserLoginName()+"";//以自动生成的人才编号进行生成一个文件夹和文件夹里面的图片
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n"+filepath+"\n\n\n\n\n\n\n\n\n\n\n\n\n");
-                File localFile = new File(filepath);
-                if(!localFile .exists()) {
-                    localFile.mkdirs();
-                }
-                path =filepath+"/"+fileName;
-                log.info("这是文件路径:"+path);
-                File server_file = new File(path);
-                file.transferTo(server_file);
-                if(userInfo != null){
-                    userInfo.setUserHeadPortrait(path);
-                    if(userInfoService.updateByPrimaryKeySelective(userInfo) > 0 ){
-                        return JsonData.buildSuccess(Constants.MSG_SUCCESS,Constants.NUM_SCUESS);
-                    }
-                }else{
-                    return JsonData.buildError(Constants.MSG_ERROR,Constants.NUM_ERROR);
-                }
-            }
-        } catch (Exception e) {
-            log.info("文件上传异常"+e.getMessage(),e);
-        }
-        return JsonData.buildSuccess(Constants.MSG_SUCCESS,Constants.NUM_SCUESS);
+        return userInfoService.updateUserSelect(file,userInfo);
     }
 
 

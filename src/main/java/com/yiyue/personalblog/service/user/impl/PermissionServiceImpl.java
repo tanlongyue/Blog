@@ -23,57 +23,14 @@ public class PermissionServiceImpl implements PermissionService {
     private PermissionMapper permissionMapper;
 
     @Override
-    public long countByExample(PermissionExample example) {
-        return 0;
-    }
-
-    @Override
-    public int deleteByExample(PermissionExample example) {
-        return 0;
-    }
-
-    @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return 0;
-    }
-
-    @Override
-    public int insert(Permission record) {
-        return 0;
-    }
-
-    @Override
-    public int insertSelective(Permission record) {
-        return 0;
-    }
-
-    @Override
     public List<Permission> selectByExample(PermissionExample example) {
-        return null;
+        return permissionMapper.selectByExample(example);
     }
 
     @Override
     public Permission selectByPrimaryKey(Integer id) {
-        return null;
+        return permissionMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public int updateByExampleSelective(Permission record, PermissionExample example) {
-        return 0;
-    }
 
-    @Override
-    public int updateByExample(Permission record, PermissionExample example) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(Permission record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(Permission record) {
-        return 0;
-    }
 }

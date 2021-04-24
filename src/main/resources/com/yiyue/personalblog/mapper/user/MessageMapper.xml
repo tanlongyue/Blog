@@ -239,12 +239,25 @@
   </update>
 
   <select id="queryMessage" resultMap="BaseResultMap">
+    SELECT * FROM message a
+    LEFT JOIN user_info userInfo ON a.userId = userInfo.id
+    where parentMessageId = #{parentId}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer">
+      select count(1) from message
+  </select>
+
+  <select id="selectMessageById" parameterType="java.lang.Integer"   resultMap="BaseResultMap">
     SELECT a.*,userInfo.* FROM message a
     LEFT JOIN user_info userInfo ON a.userId = userInfo.id
+    where messageId = #{messageId}
   </select>
-    <select id="selectCount" resultType="java.lang.Integer">
-        select count(1) from message
-    </select>
 
+  <select id="queryMessageAll" resultMap="BaseResultMap">
+    SELECT * FROM message a
+    LEFT JOIN user_info userInfo ON a.userId = userInfo.id
+    where parentMessageId = #{Number}
+  </select>
 
 </mapper>

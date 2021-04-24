@@ -22,25 +22,6 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     @Autowired
     private RolePermissionMapper rolePermissionMapper;
 
-    @Override
-    public long countByExample(RolePermissionExample example) {
-        return 0;
-    }
-
-    @Override
-    public int deleteByExample(RolePermissionExample example) {
-        return 0;
-    }
-
-    @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return 0;
-    }
-
-    @Override
-    public int insert(RolePermission record) {
-        return 0;
-    }
 
     @Override
     public int insertSelective(RolePermission record) {
@@ -49,31 +30,12 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Override
     public List<RolePermission> selectByExample(RolePermissionExample example) {
-        return null;
+        return rolePermissionMapper.selectByExample(example);
     }
 
     @Override
     public RolePermission selectByPrimaryKey(Integer id) {
-        return null;
+        return rolePermissionMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public int updateByExampleSelective(RolePermission record, RolePermissionExample example) {
-        return 0;
-    }
-
-    @Override
-    public int updateByExample(RolePermission record, RolePermissionExample example) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(RolePermission record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(RolePermission record) {
-        return 0;
-    }
 }

@@ -31,11 +31,7 @@ public class MessageController {
      * */
     @RequestMapping(value = "queryMessageAll",method = RequestMethod.GET)
     public JsonData queryMessageAll(){
-        /**
-         * 查询出所有的留言
-         * */
-        List<Message> messages = messageService.queryMessage();
-        return JsonData.buildSuccess(messages,Constants.NUM_SCUESS);
+        return messageService.queryMessageAll();
     }
 
 

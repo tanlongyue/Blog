@@ -48,7 +48,6 @@ public class Message implements Serializable {
      * */
     private UserInfo userInfo;
 
-
     private List<Message> replyMessagesList = new ArrayList<>();//回复留言
 
     private Message parentMessage;      //父留言

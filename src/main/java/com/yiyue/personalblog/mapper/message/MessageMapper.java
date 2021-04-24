@@ -31,10 +31,16 @@ public interface MessageMapper {
     /**
      * 查询全部留言和对应的用户信息
      * */
-    List<Message> queryMessage();
+    List<Message> queryMessage(Integer parentId);
 
     /**
      * 查询总计数留言
      * */
     Integer selectCount();
+
+    Message selectMessageById(Integer messageId);
+
+    List<Message> selectReplayTwoList(Integer childMessageId);
+
+    List<Message> queryMessageAll(Integer Number);
 }
